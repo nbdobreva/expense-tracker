@@ -1,0 +1,58 @@
+@model ExpenseTracker.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12 d-flex align-items-center">
+        <a asp-action="Index" class="btn btn-link p-0" style="margin-right: 20px;">
+            <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem; color: black;"></i>
+        </a>
+        <h4 class="mb-0">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group mb-4">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control no-rounded-corners" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-dark no-rounded-corners" />
+                <a asp-action="Index" class="btn btn-link">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<style>
+    .no-rounded-corners {
+        border-radius: 0 !important;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    a.btn-link {
+        color: inherit;
+    }
+
+    a.btn-link:hover {
+        text-decoration: none;
+    }
+</style>

@@ -1,0 +1,140 @@
+@model IEnumerable<ExpenseTracker.Models.BudgetEntry>
+@using System.Globalization
+@using System.Linq.Expressions
+
+@{
+    ViewData["Title"] = "Expense Tracker";
+    var timeRange = ViewBag.TimeRange as string;
+    var totalAmount = ViewBag.TotalAmount as decimal?;
+
+    string GetSelectedAttribute(string value) => timeRange == value ? "selected" : "";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12 d-flex align-items-center">
+        <h4 class="mb-0" style="letter-spacing: 1pt;">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<hr />
+
+<div class="container mt-4 text-center">
+    <div class="btn-group mb-3" role="group">
+        <a asp-action="Create" class="btn btn-black-white no-rounded-corners"
+            style="background-color: black; color: white; border: 1px solid black; letter-spacing: 1pt;">
+            Log New Expense
+        </a>
+        <a asp-controller="Category" asp-action="Index" class="btn no-rounded-corners"
+            style="color: black; border: 1px solid black; letter-spacing: 1pt;">
+            <i class="bi bi-tags"></i> Manage Categories
+        </a>
+    </div>
+    <select id="timeRangeFilter" class="form-select my-3 w-auto mx-auto no-rounded-corners" style="letter-spacing: 1pt;"
+        onchange="filterExpenses()">
+        <!option value="today" @Html.Raw(GetSelectedAttribute("today"))>Today</!option>
+        <!option value="lastWeek" @Html.Raw(GetSelectedAttribute("lastWeek"))>Last Week</!option>
+        <!option value="lastMonth" @Html.Raw(GetSelectedAttribute("lastMonth"))>Last Month</!option>
+    </select>
+    <div>
+        <h3 style="letter-spacing: 1pt; margin-top: 30px;">@totalAmount.ToString() BGN</h3>
+        <h6 style="letter-spacing: 1pt; font-size: 9pt; color: gray;">AMOUNT FOR PERIOD</h6>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="table-responsive">
+        @{
+            Expression<Func<ExpenseTracker.Models.BudgetEntry, DateTime>> groupByExpression = x => x.Date.Date;
+            Expression<Func<IGrouping<DateTime, ExpenseTracker.Models.BudgetEntry>, DateTime>> orderByExpression = g =>
+            g.Key;
+
+            var groupedExpenses = Model
+            .GroupBy(groupByExpression.Compile())
+            .OrderByDescending(orderByExpression.Compile())
+            .ToList();
+        }
+
+        @foreach (var group in groupedExpenses)
+        {
+            var totalAmountForDay = group.Sum(item => item.Amount);
+
+            <h6 class="mt-5" style="letter-spacing: 1pt;">
+                @group.Key.ToString("dddd, MMMM d")
+                <span class="float-end">@totalAmountForDay.ToString() BGN</span>
+            </h6>
+            <table class="table table-striped table-hover" style="letter-spacing: 1pt;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Amount (BGN)</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in group)
+                    {
+                        <tr>
+                            <td>@item.Description</td>
+                            <td>@item.Amount.ToString()</td>
+                            <td>@(string.IsNullOrEmpty(item.Category?.Name) ? "Uncategorized" : item.Category.Name)</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link p-0 btn-sm">
+                                    <i class="bi bi-pencil-fill"
+                                        style="color: black; font-size: 1.2em; margin-right: 10px;"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link p-0 btn-sm text-danger">
+                                    <i class="bi bi-trash" style="color: black; font-size: 1.2em; margin-right: 10px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        function filterExpenses() {
+            var selectedRange = document.getElementById('timeRangeFilter').value;
+            window.location.href = '@Url.Action("Index", "BudgetEntry")' + '?timeRange=' + selectedRange;
+        }
+    </script>
+}
+
+<style>
+    .no-rounded-corners {
+        border-radius: 0 !important;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+
+    a.btn-link {
+        color: inherit;
+    }
+
+    a.btn-link:hover {
+        text-decoration: none;
+    }
+
+    .mt-5 {
+        margin-top: 3rem;
+    }
+
+    .btn-black-white {
+        background-color: black;
+        color: white;
+        border: 1px solid black;
+    }
+
+    .btn-black-white:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+</style>

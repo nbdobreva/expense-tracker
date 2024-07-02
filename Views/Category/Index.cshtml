@@ -1,0 +1,79 @@
+@model IEnumerable<ExpenseTracker.Models.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12 d-flex align-items-center">
+        <a asp-action="Index" asp-controller="BudgetEntry" class="btn btn-link p-0" style="margin-right: 20px;">
+            <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem; color: black;"></i>
+        </a>
+        <h4 class="mb-0" style="letter-spacing: 1pt;">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<hr />
+
+<div class="container mt-4 text-center" style="letter-spacing: 1pt;">
+    <a asp-action="Create" class="btn btn-outline-dark no-rounded-corners mb-3">New Category</a>
+</div>
+
+<div class="container mt-3" style="letter-spacing: 1pt;">
+    <div class="table-responsive text-center">
+        <table class="table table-striped table-hover text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Name)</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link p-0 btn-sm">
+                                <i class="bi bi-pencil-fill"
+                                    style="color: black; font-size: 1.2em; margin-right: 10px;"></i>
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 btn-sm text-danger">
+                                    <i class="bi bi-trash" style="color: black; font-size: 1.2em; margin-right: 10px;"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<style>
+    .no-rounded-corners {
+        border-radius: 0 !important;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+
+    .table-responsive table th,
+    .table-responsive table td {
+        text-align: center;
+    }
+
+    a.btn-link {
+        color: inherit;
+    }
+
+    a.btn-link:hover {
+        text-decoration: none;
+    }
+</style>

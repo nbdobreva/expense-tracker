@@ -1,0 +1,84 @@
+﻿body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+span,
+input,
+button,
+label,
+th,
+td {
+  letter-spacing: 1pt !important;
+}
+
+.btn-outline-primary:hover {
+  color: white;
+  background-color: #1b6ec2;
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  color: white;
+  background-color: #6c757d;
+}
+
+thead.thead-dark th {
+  background-color: #343a40;
+  color: white;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.btn-outline-warning {
+  color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-outline-warning:hover {
+  color: white;
+  background-color: #ffc107;
+}
+
+.btn-outline-info {
+  color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-outline-info:hover {
+  color: white;
+  background-color: #17a2b8;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  color: white;
+  background-color: #dc3545;
+}

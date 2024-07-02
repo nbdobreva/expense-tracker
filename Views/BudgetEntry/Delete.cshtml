@@ -1,0 +1,72 @@
+@model ExpenseTracker.Models.BudgetEntry
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="row mt-4" style="letter-spacing: 1pt;">
+    <div class="col-md-12 d-flex align-items-center">
+        <a asp-action="Index" class="btn btn-link p-0" style="margin-right: 20px;">
+            <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem; color: black;"></i>
+        </a>
+        <h4 class="mb-0" style="letter-spacing: 1pt;">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<hr />
+<div class="row" style="letter-spacing: 1pt;">
+    <div class="col-md-4">
+        <h4>Review Expense</h4>
+        <hr />
+        <div>
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Amount)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Amount)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete" style="letter-spacing: 1pt;">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-outline-dark no-rounded-corners"
+                    style="letter-spacing: 1pt;" />
+                <a asp-action=" Index" class="btn btn-outline-secondary no-rounded-corners"
+                    style="margin-left: 10px; letter-spacing: 1pt;">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<style>
+    .no-rounded-corners {
+        border-radius: 0 !important;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+</style>

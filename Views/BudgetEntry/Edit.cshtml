@@ -1,0 +1,64 @@
+@model ExpenseTracker.Models.BudgetEntry
+
+@{
+    ViewData["Title"] = "Edit Expense";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12 d-flex align-items-center">
+        <a asp-action="Index" class="btn btn-link p-0" style="margin-right: 20px;">
+            <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem; color: black; letter-spacing: 1pt;"></i>
+        </a>
+        <h4 class="mb-0" style="letter-spacing: 1pt;">Edit Expense</h4>
+    </div>
+</div>
+
+<hr />
+<div class="row" style="letter-spacing: 1pt;">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group mb-4">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control no-rounded-corners" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control no-rounded-corners" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control no-rounded-corners" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select asp-for="CategoryId" class="form-control no-rounded-corners"
+                    asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-dark no-rounded-corners"
+                    style="letter-spacing: 1pt;" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .no-rounded-corners {
+        border-radius: 0 !important;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+</style>
